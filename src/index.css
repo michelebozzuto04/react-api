@@ -38,6 +38,7 @@
     flex-direction: column;
     justify-content: end;
     position: absolute;
+    gap: 3px;
     padding: 1rem;
     border-radius: 20px;
     top: 0;
@@ -45,6 +46,11 @@
 
     h2 {
       font-weight: 800;
+    }
+
+    .actorAwardsText {
+      font-weight: 700;
+      font-size: 18px;
     }
   }
 }
@@ -56,4 +62,18 @@
   border-radius: 60px;
   background-color: green;
   margin-right: 5px;
+}
+
+.searchContainer {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+
+  .searchInput {
+    width: 50%;
+    height: 50px;
+    font-size: 20px;
+    padding: 0rem 1rem;
+    border-radius: 10px;
+  }
 }

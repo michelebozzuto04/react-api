@@ -37,7 +37,9 @@ function App() {
 
   return (
     <div className='container'>
-      <input value={searchInput} onChange={(e) => setSearchInput(e.target.value)} type='text' />
+      <div className='searchContainer'>
+        <input className='searchInput' placeholder='Search actor name...' value={searchInput} onChange={(e) => setSearchInput(e.target.value)} type='text' />
+      </div>
       <div className='actorsSection'>
         {filteredActors.map((actor, index) => {
           return (
@@ -46,7 +48,7 @@ function App() {
               <div className='detailsContainer'>
                 <h2>{actor.name}</h2>
                 <p>{actor.birth_year}, {actor.nationality}</p>
-                <p>{actor.awards}</p>
+                <p className='actorAwardsText'>{actor.awards}</p>
                 <p>{actor.biography}</p>
               </div>
             </div>
