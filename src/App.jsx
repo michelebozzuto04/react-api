@@ -2,31 +2,34 @@ import { useState } from 'react'
 import './index.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [actors, setActors] = useState([]);
+  const [actresses, setActresses] = useState([]);
+
+  fetch('https://lanciweb.github.io/demo/api/actresses/')
+    .then(response => response.json())
+    .then(data => setActresses(data))
+
+  fetch('https://lanciweb.github.io/demo/api/actors/')
+    .then(response => response.json())
+    .then(data => setActors(data))
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className='container'>
+      <div className='actorsSection'>
+        {actors.map((actor, index) => {
+          return (
+            <div className='cardContainer' key={actor.id}>
+              <img className='imgContainer' src={actor.image} />
+              <div className='detailsContainer'>
+                <h2>{actor.name}</h2>
+                <p>Nationality: {actor.nationality}</p>
+              </div>
+            </div>
+          )
+        })}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
