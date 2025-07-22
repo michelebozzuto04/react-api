@@ -1,29 +1,53 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './index.css'
 
 function App() {
+  const [allActors, setAllActors] = useState([]);
+  const [filteredActors, setFilteredActors] = useState(allActors)
+  const [searchInput, setSearchInput] = useState('');
 
-  const [actors, setActors] = useState([]);
-  const [actresses, setActresses] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [response1, response2] = await Promise.all([
+          fetch('https://lanciweb.github.io/demo/api/actresses/'),
+          fetch('https://lanciweb.github.io/demo/api/actors/'),
+        ]);
 
-  fetch('https://lanciweb.github.io/demo/api/actresses/')
-    .then(response => response.json())
-    .then(data => setActresses(data))
+        const [actresses, actors] = await Promise.all([
+          response1.json(),
+          response2.json(),
+        ]);
 
-  fetch('https://lanciweb.github.io/demo/api/actors/')
-    .then(response => response.json())
-    .then(data => setActors(data))
+        const all = [...actresses, ...actors];
+
+        setAllActors(all);
+      } catch (error) {
+        console.error('Error fetching data: ', error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const filtered = allActors.filter(actor => actor.name.toLowerCase().includes(searchInput.toLowerCase()));
+
+    setFilteredActors(filtered)
+  }, [allActors, searchInput])
 
   return (
     <div className='container'>
+      <input value={searchInput} onChange={(e) => setSearchInput(e.target.value)} type='text' />
       <div className='actorsSection'>
-        {actors.map((actor, index) => {
+        {filteredActors.map((actor, index) => {
           return (
-            <div className='cardContainer' key={actor.id}>
+            <div className='cardContainer' key={index}>
               <img className='imgContainer' src={actor.image} />
               <div className='detailsContainer'>
                 <h2>{actor.name}</h2>
-                <p>Nationality: {actor.nationality}</p>
+                <p>{actor.birth_year}, {actor.nationality}</p>
+                <p>{actor.awards}</p>
+                <p>{actor.biography}</p>
               </div>
             </div>
           )

@@ -20,10 +20,11 @@
 
 .cardContainer {
   position: relative;
+  width: 100%;
 
   img {
-    aspect-ratio: 1 /1;
-    min-width: 100%;
+    width: 100%;
+    aspect-ratio: 2 / 3;
     object-fit: cover;
     border-radius: 20px;
   }
